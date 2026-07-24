@@ -1,0 +1,91 @@
+// Function to toggle between Landing Page and Dashboard View
+function showPage(pageId) {
+  const landing = document.getElementById('landing-page');
+  const dashboard = document.getElementById('dashboard-page');
+
+  if (pageId === 'dashboard') {
+    landing.classList.add('hidden');
+    dashboard.classList.remove('hidden');
+    window.scrollTo(0, 0);
+  } else {
+    dashboard.classList.add('hidden');
+    landing.classList.remove('hidden');
+  }
+}
+
+// Simulated AI Chatbot Logic for Dashboard
+function sendChatMessage(event) {
+  event.preventDefault();
+  
+  const inputEl = document.getElementById('user-input');
+  const chatWindow = document.getElementById('chat-window');
+  const text = inputEl.value.trim();
+
+  if (!text) return;
+
+  // Render User Message
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-message user';
+  userMsg.textContent = text;
+  chatWindow.appendChild(userMsg);
+
+  inputEl.value = '';
+  chatWindow.scrollTop = chatWindow.scrollHeight;
+
+  // Generate Automated AI Reply
+  setTimeout(() => {
+    const botMsg = document.createElement('div');
+    botMsg.className = 'chat-message bot';
+    
+    let replyText = "I can definitely help with that! Would you like me to book an appointment or check our available staff slots?";
+    
+    const lower = text.toLowerCase();
+    if (lower.includes('price') || lower.includes('cost')) {
+      replyText = "Haircuts start at $30, Beard trims are $15, and full styling package is $50.";
+    } else if (lower.includes('book') || lower.includes('appointment')) {
+      replyText = "I have openings today at 3:00 PM and 4:30 PM with Marcus. Which one works for you?";
+      // Auto-add booking to calendar mockup for demo feel
+      setTimeout(addSampleBooking, 1500);
+    } else if (lower.includes('hours') || lower.includes('open')) {
+      replyText = "We are open Tuesday to Saturday from 9:00 AM to 7:00 PM!";
+    }
+
+    botMsg.innerHTML = `<i class="fa-solid fa-robot"></i> <div>${replyText}</div>`;
+    chatWindow.appendChild(botMsg);
+    chatWindow.scrollTop = chatWindow.scrollHeight;
+  }, 800);
+}
+
+// Function to dynamically add a new booking to the mockup list
+function addSampleBooking() {
+  const bookingList = document.getElementById('booking-list');
+  const names = ['Chris Evans', 'Jordan Reed', 'Taylor Swift', 'Sam Wilson'];
+  const services = ['Standard Cut', 'Beard Trim & Fade', 'Styling & Wash'];
+  
+  const randomName = names[Math.floor(Math.random() * names.length)];
+  const randomService = services[Math.floor(Math.random() * services.length)];
+  
+  const newItem = document.createElement('li');
+  newItem.className = 'booking-item';
+  newItem.innerHTML = `
+    <div>
+      <strong>${randomName} (New)</strong>
+      <p>${randomService} (Auto-Booked by AI)</p>
+    </div>
+    <span class="time-badge">Just Now</span>
+  `;
+
+  bookingList.prepend(newItem);
+}
+
+// Contact Form Handler
+function handleContactSubmit(event) {
+  event.preventDefault();
+  const emailInput = document.getElementById('contact-email');
+  const msgEl = document.getElementById('contact-msg');
+
+  if (emailInput.value) {
+    msgEl.textContent = "Thank you! We've received your request and will reach out shortly.";
+    emailInput.value = '';
+  }
+}
