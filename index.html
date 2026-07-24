@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BizBot AI - Smart Assistant for Salons & Barbershops</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <div class="logo">
+        <i class="fa-solid fa-robot"></i> <span>BizBot<strong>AI</strong></span>
+      </div>
+      <nav class="nav-links">
+        <a href="#hero" class="nav-item">Home</a>
+        <a href="#benefits" class="nav-item">Benefits</a>
+        <a href="#how-it-works" class="nav-item">How It Works</a>
+        <a href="#pricing" class="nav-item">Pricing</a>
+        <button class="btn btn-outline" onclick="showPage('dashboard')">Live Demo</button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- LANDING PAGE VIEW -->
+  <main id="landing-page" class="page">
+    
+    <!-- Hero Section -->
+    <section id="hero" class="hero-section">
+      <div class="container hero-container">
+        <div class="hero-text">
+          <span class="badge">Built for Barbershops & Salons</span>
+          <h1>Automate Your Bookings & Client Messages with AI</h1>
+          <p>Never miss a client call or booking again. BizBot AI handles appointments, replies to questions 24/7, and organizes your daily salon schedule automatically.</p>
+          <div class="hero-cta">
+            <button class="btn btn-primary" onclick="showPage('dashboard')">Try Live Demo <i class="fa-solid fa-arrow-right"></i></button>
+            <a href="#pricing" class="btn btn-secondary">View Pricing</a>
+          </div>
+        </div>
+        <div class="hero-card-preview" onclick="showPage('dashboard')">
+          <div class="preview-header">
+            <div class="dots"><span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span></div>
+            <span>BizBot AI Live Assistant</span>
+          </div>
+          <div class="preview-body">
+            <div class="chat-bubble client">Hi, do you have any haircut slots open today around 4 PM?</div>
+            <div class="chat-bubble ai"><i class="fa-solid fa-robot"></i> Yes! Marcus has an open slot at 4:15 PM. Would you like me to book that for you?</div>
+            <div class="chat-bubble client">Perfect, book it for Alex!</div>
+            <div class="chat-bubble ai"><i class="fa-solid fa-robot"></i> Done! Alex is booked for 4:15 PM. Confirmation sent via SMS.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits-section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Why Salon & Barbershop Owners Love BizBot</h2>
+          <p>Focus on your craft while AI handles the administrative busywork.</p>
+        </div>
+        <div class="grid grid-3">
+          <div class="card">
+            <div class="icon-box"><i class="fa-solid fa-comments"></i></div>
+            <h3>24/7 Client Replies</h3>
+            <p>Automatically answer FAQs about pricing, hours, and location on WhatsApp, Instagram, or SMS.</p>
+          </div>
+          <div class="card">
+            <div class="icon-box"><i class="fa-solid fa-calendar-check"></i></div>
+            <h3>Zero Double-Bookings</h3>
+            <p>Sync appointments directly into your calendar and send automatic reminder texts to reduce no-shows.</p>
+          </div>
+          <div class="card">
+            <div class="icon-box"><i class="fa-solid fa-chart-line"></i></div>
+            <h3>More Repeat Business</h3>
+            <p>Automatically send follow-ups to clients who haven't booked a trim or styling in over 3 weeks.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="how-section">
+      <div class="container">
+        <div class="section-title">
+          <h2>How It Works in 3 Simple Steps</h2>
+        </div>
+        <div class="grid grid-3">
+          <div class="step-card">
+            <div class="step-number">1</div>
+            <h3>Connect Your Business</h3>
+            <p>Link your phone number, Instagram page, or booking calendar in less than 5 minutes.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">2</div>
+            <h3>Set Your Services</h3>
+            <p>Tell BizBot your prices, team availability, and opening hours.</p>
+          </div>
+          <div class="step-card">
+            <div class="step-number">3</div>
+            <h3>Let AI Take Over</h3>
+            <p>Sit back and let BizBot handle customer inquiries and confirm appointments around the clock.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="pricing-section">
+      <div class="container">
+        <div class="section-title">
+          <h2>Simple, Transparent Pricing</h2>
+          <p>No contracts. Cancel anytime.</p>
+        </div>
+        <div class="grid grid-2">
+          <div class="card pricing-card">
+            <h3>Starter Plan</h3>
+            <div class="price">$29 <span>/ month</span></div>
+            <p>Perfect for solo barbers and independent stylists.</p>
+            <ul class="features-list">
+              <li><i class="fa-solid fa-check"></i> Up to 300 AI conversations / mo</li>
+              <li><i class="fa-solid fa-check"></i> Automated Calendar Booking</li>
+              <li><i class="fa-solid fa-check"></i> SMS Appointment Reminders</li>
+            </ul>
+            <button class="btn btn-outline full-width" onclick="showPage('dashboard')">Start Free Trial</button>
+          </div>
+          <div class="card pricing-card featured">
+            <span class="popular-tag">Most Popular</span>
+            <h3>Pro Shop Plan</h3>
+            <div class="price">$59 <span>/ month</span></div>
+            <p>Ideal for multi-chair barbershops and busy salons.</p>
+            <ul class="features-list">
+              <li><i class="fa-solid fa-check"></i> Unlimited AI Conversations</li>
+              <li><i class="fa-solid fa-check"></i> WhatsApp & Instagram Integration</li>
+              <li><i class="fa-solid fa-check"></i> Multi-Staff Schedule Management</li>
+              <li><i class="fa-solid fa-check"></i> Automated Re-booking Campaigns</li>
+            </ul>
+            <button class="btn btn-primary full-width" onclick="showPage('dashboard')">Get Started</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+      <div class="container text-center">
+        <h2>Ready to grow your shop with AI?</h2>
+        <p>Contact our support team or request a customized setup for your business.</p>
+        <form class="contact-form" onsubmit="handleContactSubmit(event)">
+          <input type="email" placeholder="Enter your work email" required id="contact-email">
+          <button type="submit" class="btn btn-primary">Request Demo Call</button>
+        </form>
+        <div id="contact-msg" class="success-message"></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- DASHBOARD MOCKUP VIEW -->
+  <main id="dashboard-page" class="page hidden">
+    <div class="container dashboard-container">
+      
+      <!-- Top Bar -->
+      <div class="dashboard-header">
+        <div>
+          <h2><i class="fa-solid fa-scissors"></i> Fresh Cuts Barbershop - Control Panel</h2>
+          <p>Real-time updates managed by BizBot AI</p>
+        </div>
+        <button class="btn btn-secondary" onclick="showPage('landing')"><i class="fa-solid fa-arrow-left"></i> Back to Website</button>
+      </div>
+
+      <!-- Dashboard Grid -->
+      <div class="dashboard-grid">
+        
+        <!-- Panel 1: AI Chat Simulator -->
+        <div class="card dash-card">
+          <div class="dash-card-header">
+            <h3><i class="fa-solid fa-comments"></i> AI Live Assistant</h3>
+            <span class="status-online"><i class="fa-solid fa-circle"></i> Active</span>
+          </div>
+          <div class="chat-window" id="chat-window">
+            <div class="chat-message bot">
+              <i class="fa-solid fa-robot"></i>
+              <div>Hello! I'm BizBot. How can I help your clients today? Try typing a message below like "Book a hair cut for tomorrow".</div>
+            </div>
+          </div>
+          <form class="chat-input-area" onsubmit="sendChatMessage(event)">
+            <input type="text" id="user-input" placeholder="Type a message (e.g., 'What are your prices?')..." required>
+            <button type="submit" class="btn btn-primary"><i class="fa-solid fa-paper-plane"></i></button>
+          </form>
+        </div>
+
+        <!-- Panel 2: Today's Bookings -->
+        <div class="card dash-card">
+          <div class="dash-card-header">
+            <h3><i class="fa-solid fa-calendar-days"></i> Today's Bookings</h3>
+            <button class="btn btn-sm btn-outline" onclick="addSampleBooking()">+ Add Manual</button>
+          </div>
+          <ul class="booking-list" id="booking-list">
+            <li class="booking-item">
+              <div>
+                <strong>David Miller</strong>
+                <p>Fade & Beard Trim (Barber: Marcus)</p>
+              </div>
+              <span class="time-badge">10:00 AM</span>
+            </li>
+            <li class="booking-item">
+              <div>
+                <strong>Sarah Jenkins</strong>
+                <p>Hair Coloring & Styling (Stylist: Elena)</p>
+              </div>
+              <span class="time-badge">11:30 AM</span>
+            </li>
+            <li class="booking-item">
+              <div>
+                <strong>Michael Johnson</strong>
+                <p>Standard Haircut (Barber: Marcus)</p>
+              </div>
+              <span class="time-badge">02:00 PM</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Panel 3: AI Task Automation -->
+        <div class="card dash-card full-width-dash">
+          <div class="dash-card-header">
+            <h3><i class="fa-solid fa-list-check"></i> Automated Daily Tasks</h3>
+          </div>
+          <div class="grid grid-3 gap-sm">
+            <div class="task-box">
+              <i class="fa-solid fa-paper-plane task-icon"></i>
+              <h4>SMS Reminders Sent</h4>
+              <p><strong>12 Reminders</strong> dispatched for today's clients.</p>
+            </div>
+            <div class="task-box">
+              <i class="fa-solid fa-user-plus task-icon"></i>
+              <h4>Re-booking Campaign</h4>
+              <p><strong>5 Inactive Clients</strong> messaged with 10% off offers.</p>
+            </div>
+            <div class="task-box">
+              <i class="fa-solid fa-star task-icon"></i>
+              <h4>Review Collection</h4>
+              <p><strong>8 Review Requests</strong> sent after completed visits.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container text-center">
+      <p>&copy; 2026 BizBot AI. All rights reserved. Built for local businesses.</p>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
