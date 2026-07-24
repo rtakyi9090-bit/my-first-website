@@ -1,182 +1,223 @@
-// ==================== PAGE NAVIGATION ====================
-function showPage(pageName) {
-  // Hide all pages
-  const pages = document.querySelectorAll('.page');
-  pages.forEach(page => page.classList.add('hidden'));
+// ========== PAGE NAVIGATION ==========
+function showPage(page) {
+  const landingPage = document.getElementById('landing-page');
+  const dashboardPage = document.getElementById('dashboard-page');
 
-  // Show selected page
-  const pageElement = document.getElementById(pageName + '-page');
-  if (pageElement) {
-    pageElement.classList.remove('hidden');
+  if (page === 'landing') {
+    landingPage.classList.remove('hidden');
+    dashboardPage.classList.add('hidden');
+  } else if (page === 'dashboard') {
+    landingPage.classList.add('hidden');
+    dashboardPage.classList.remove('hidden');
   }
-
-  // Scroll to top
-  window.scrollTo(0, 0);
 }
 
-// ==================== CHAT FUNCTIONALITY ====================
+// ========== CHAT FUNCTIONALITY ==========
 function sendChatMessage(event) {
   event.preventDefault();
-
   const userInput = document.getElementById('user-input');
   const chatWindow = document.getElementById('chat-window');
 
   if (userInput.value.trim() === '') return;
 
-  // Add user message to chat
-  const userMessageDiv = document.createElement('div');
-  userMessageDiv.className = 'chat-message user';
-  userMessageDiv.innerHTML = `<div>${userInput.value}</div>`;
-  chatWindow.appendChild(userMessageDiv);
+  // Add user message
+  const userMsg = document.createElement('div');
+  userMsg.className = 'chat-message user';
+  userMsg.textContent = userInput.value;
+  chatWindow.appendChild(userMsg);
 
-  // Get bot response
-  const userMessage = userInput.value.toLowerCase();
-  userInput.value = '';
-
-  // Simulate bot thinking
+  // Simulate AI response
   setTimeout(() => {
-    const botResponse = getBotResponse(userMessage);
-    const botMessageDiv = document.createElement('div');
-    botMessageDiv.className = 'chat-message bot';
-    botMessageDiv.innerHTML = `
-      <i class="fa-solid fa-robot"></i>
-      <div>${botResponse}</div>
-    `;
-    chatWindow.appendChild(botMessageDiv);
-
-    // Auto scroll to bottom
+    const aiMsg = document.createElement('div');
+    aiMsg.className = 'chat-message bot';
+    aiMsg.innerHTML = '<i class="fa-solid fa-robot"></i><div>' + getAIResponse(userInput.value) + '</div>';
+    chatWindow.appendChild(aiMsg);
     chatWindow.scrollTop = chatWindow.scrollHeight;
-  }, 600);
+  }, 500);
 
-  // Auto scroll
+  userInput.value = '';
   chatWindow.scrollTop = chatWindow.scrollHeight;
 }
 
-function getBotResponse(userMessage) {
-  // AI Response Logic
+function getAIResponse(userMessage) {
   const responses = {
-    prices: "Our prices range from $20 for a basic haircut to $50 for premium styling services. You can view all services and pricing by visiting our pricing section!",
-    booking: "I'd be happy to help you book an appointment! What service are you interested in and what time works best for you?",
-    hours: "We're open Monday to Friday from 9 AM to 7 PM, Saturday 8 AM to 6 PM, and closed on Sundays.",
-    location: "We're located at 123 Main Street, Downtown. You can easily find us on Google Maps!",
-    stylist: "We have Marcus (barber specialist), Elena (stylist), and James (color specialist) available. Who would you prefer?",
-    availability: "We have availability tomorrow at 2 PM, 3:30 PM, and 5 PM. Would any of these times work for you?",
-    confirmation: "Great! Your appointment has been confirmed and you'll receive an SMS reminder 24 hours before your visit.",
-    default: "Thanks for asking! I'm BizBot AI, your salon assistant. I can help you with bookings, pricing, hours, available stylists, and more. What would you like to know?"
+    'price': 'Our Starter Plan is $29/month and our Pro Shop Plan is $59/month. Which would you like to know more about?',
+    'hours': 'We\'re open Monday-Saturday, 9am-6pm, and Sunday 10am-4pm.',
+    'book': 'Great! I can help you book an appointment. What service are you interested in?',
+    'haircut': 'Perfect! We have availability tomorrow at 2:00 PM with Marcus. Would you like to book that?',
+    'available': 'We have several slots available this week. What day works best for you?',
+    'default': 'Thanks for your question! Our team will be happy to help. What else can I assist you with?'
   };
 
-  // Check keywords
-  if (userMessage.includes('price') || userMessage.includes('cost') || userMessage.includes('how much')) {
-    return responses.prices;
-  } else if (userMessage.includes('book') || userMessage.includes('appointment') || userMessage.includes('schedule')) {
-    return responses.booking;
-  } else if (userMessage.includes('hour') || userMessage.includes('open') || userMessage.includes('close')) {
-    return responses.hours;
-  } else if (userMessage.includes('location') || userMessage.includes('address') || userMessage.includes('where')) {
-    return responses.location;
-  } else if (userMessage.includes('stylist') || userMessage.includes('barber') || userMessage.includes('marcus') || userMessage.includes('elena')) {
-    return responses.stylist;
-  } else if (userMessage.includes('available') || userMessage.includes('free') || userMessage.includes('when')) {
-    return responses.availability;
-  } else if (userMessage.includes('confirm') || userMessage.includes('confirmed')) {
-    return responses.confirmation;
-  } else {
-    return responses.default;
+  const lowerMsg = userMessage.toLowerCase();
+  for (const [key, value] of Object.entries(responses)) {
+    if (lowerMsg.includes(key)) {
+      return value;
+    }
   }
+  return responses['default'];
 }
 
-// ==================== BOOKING MANAGEMENT ====================
+// ========== BOOKINGS FUNCTIONALITY ==========
 function addSampleBooking() {
   const bookingList = document.getElementById('booking-list');
-  const names = ['Emma Brown', 'Chris Lee', 'Jessica White', 'Tom Davis', 'Lisa Anderson'];
-  const services = [
-    'Haircut & Styling',
-    'Beard Trim',
-    'Color Treatment',
-    'Hair Wash & Cut',
-    'Full Makeover'
-  ];
-  const stylists = ['Marcus', 'Elena', 'James'];
-
-  const randomName = names[Math.floor(Math.random() * names.length)];
-  const randomService = services[Math.floor(Math.random() * services.length)];
-  const randomStylist = stylists[Math.floor(Math.random() * stylists.length)];
-  const randomHour = Math.floor(Math.random() * 8) + 9; // 9 AM to 5 PM
-  const randomMinute = Math.random() > 0.5 ? '00' : '30';
-  const timeSlot = `${String(randomHour).padStart(2, '0')}:${randomMinute} ${randomHour >= 12 ? 'PM' : 'AM'}`;
-
-  const newBookingHTML = `
-    <li class="booking-item">
-      <div>
-        <strong>${randomName}</strong>
-        <p>${randomService} (Stylist: ${randomStylist})</p>
-      </div>
-      <span class="time-badge">${timeSlot}</span>
-    </li>
+  const newBooking = document.createElement('li');
+  newBooking.className = 'booking-item';
+  newBooking.innerHTML = `
+    <div>
+      <strong>New Client</strong>
+      <p>Service Booked (Barber: TBD)</p>
+    </div>
+    <span class="time-badge">03:30 PM</span>
   `;
-
-  bookingList.insertAdjacentHTML('beforeend', newBookingHTML);
+  bookingList.appendChild(newBooking);
 }
 
-// ==================== CONTACT FORM ====================
+// ========== CONTACT FORM ==========
 function handleContactSubmit(event) {
   event.preventDefault();
+  const email = document.getElementById('contact-email').value;
+  const msgDiv = document.getElementById('contact-msg');
 
-  const emailInput = document.getElementById('contact-email');
-  const email = emailInput.value;
-  const messageDiv = document.getElementById('contact-msg');
+  msgDiv.textContent = '✓ Thank you! We\'ll contact you soon at ' + email;
+  msgDiv.style.display = 'block';
+  document.getElementById('contact-email').value = '';
 
-  // Simple email validation
-  if (!email.includes('@')) {
-    showMessage('Please enter a valid email address.', false);
-    return;
-  }
-
-  // Simulate sending
-  showMessage('✓ Demo request submitted! We\'ll contact you within 24 hours.', true);
-  emailInput.value = '';
-
-  // Hide message after 5 seconds
   setTimeout(() => {
-    messageDiv.classList.remove('show');
+    msgDiv.style.display = 'none';
   }, 5000);
 }
 
-function showMessage(text, isSuccess) {
-  const messageDiv = document.getElementById('contact-msg');
-  messageDiv.textContent = text;
-  messageDiv.className = 'success-message show';
-  if (!isSuccess) {
-    messageDiv.style.background = '#ef4444';
-  } else {
-    messageDiv.style.background = '#10b981';
+// ========== STRIPE PAYMENT INTEGRATION ==========
+
+// Initialize Stripe (Replace with your actual Stripe Publishable Key)
+const stripe = Stripe('pk_test_YOUR_STRIPE_PUBLISHABLE_KEY');
+const elements = stripe.elements();
+let cardElement = null;
+let selectedPlan = null;
+let selectedPrice = null;
+
+// Initialize Stripe Card Element
+function initializeStripe() {
+  if (!cardElement) {
+    cardElement = elements.create('card');
+    cardElement.mount('#card-element');
+
+    cardElement.addEventListener('change', (event) => {
+      const displayError = document.getElementById('card-errors');
+      if (event.error) {
+        displayError.textContent = event.error.message;
+      } else {
+        displayError.textContent = '';
+      }
+    });
   }
 }
 
-// ==================== SMOOTH SCROLLING ====================
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function(e) {
-    if (this.getAttribute('href') !== '#') {
-      e.preventDefault();
-      const target = document.querySelector(this.getAttribute('href'));
-      if (target) {
-        target.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start'
+// Open Payment Modal
+function openPaymentModal(plan, price) {
+  selectedPlan = plan;
+  selectedPrice = price;
+
+  const planName = plan === 'starter' ? 'Starter Plan - $29/month' : 'Pro Shop Plan - $59/month';
+  document.getElementById('plan-name').textContent = '📋 Plan: ' + planName;
+  document.getElementById('plan-price').textContent = '💰 Amount: $' + price;
+
+  document.getElementById('payment-modal').classList.remove('hidden');
+  document.getElementById('modal-overlay').classList.remove('hidden');
+
+  initializeStripe();
+}
+
+// Close Payment Modal
+function closePaymentModal() {
+  document.getElementById('payment-modal').classList.add('hidden');
+  document.getElementById('modal-overlay').classList.add('hidden');
+  document.getElementById('payment-form').reset();
+  document.getElementById('payment-status').classList.add('hidden');
+  document.getElementById('card-errors').textContent = '';
+}
+
+// Handle Payment Form Submission
+document.addEventListener('DOMContentLoaded', () => {
+  const paymentForm = document.getElementById('payment-form');
+  if (paymentForm) {
+    paymentForm.addEventListener('submit', async (event) => {
+      event.preventDefault();
+
+      const submitBtn = document.getElementById('submit-btn');
+      const buttonText = document.getElementById('button-text');
+      const spinner = document.getElementById('spinner');
+      const email = document.getElementById('email').value;
+      const name = document.getElementById('name').value;
+
+      // Show loading state
+      submitBtn.disabled = true;
+      buttonText.textContent = 'Processing...';
+      spinner.classList.remove('hidden');
+
+      try {
+        // Create payment method
+        const { paymentMethod, error } = await stripe.createPaymentMethod({
+          type: 'card',
+          card: cardElement,
+          billing_details: {
+            email: email,
+            name: name
+          }
         });
+
+        if (error) {
+          showPaymentStatus('error', 'Payment failed: ' + error.message);
+          submitBtn.disabled = false;
+          buttonText.textContent = 'Pay Now';
+          spinner.classList.add('hidden');
+          return;
+        }
+
+        // Send to backend to create subscription
+        const response = await fetch('/create-subscription', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            paymentMethodId: paymentMethod.id,
+            email: email,
+            name: name,
+            plan: selectedPlan,
+            amount: selectedPrice * 100 // Stripe uses cents
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          showPaymentStatus('success', '✓ Payment successful! Your subscription is now active. Check your email for confirmation.');
+          
+          // Reset form after 3 seconds
+          setTimeout(() => {
+            closePaymentModal();
+          }, 3000);
+        } else {
+          showPaymentStatus('error', 'Payment failed: ' + result.message);
+        }
+
+      } catch (error) {
+        showPaymentStatus('error', 'An error occurred: ' + error.message);
       }
-    }
-  });
+
+      // Reset button state
+      submitBtn.disabled = false;
+      buttonText.textContent = 'Pay Now';
+      spinner.classList.add('hidden');
+    });
+  }
 });
 
-// ==================== INITIALIZE ====================
-document.addEventListener('DOMContentLoaded', function() {
-  // Show landing page by default
-  showPage('landing');
-
-  // Add some sample bookings on load
-  setTimeout(() => {
-    addSampleBooking();
-    addSampleBooking();
-  }, 500);
-});
+function showPaymentStatus(type, message) {
+  const statusDiv = document.getElementById('payment-status');
+  statusDiv.className = 'payment-status ' + type;
+  statusDiv.textContent = message;
+  statusDiv.classList.remove('hidden');
+}

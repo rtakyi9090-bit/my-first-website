@@ -6,6 +6,7 @@
   <title>BizBot AI - Smart Assistant for Salons & Barbershops</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://js.stripe.com/v3/"></script>
 </head>
 <body>
 
@@ -16,17 +17,17 @@
         <i class="fa-solid fa-robot"></i> <span>BizBot<strong>AI</strong></span>
       </div>
       <nav class="nav-links">
-        <a href="#hero" class="nav-item">Home</a>
-        <a href="#benefits" class="nav-item">Benefits</a>
-        <a href="#how-it-works" class="nav-item">How It Works</a>
-        <a href="#pricing" class="nav-item">Pricing</a>
+        <a href="#hero" class="nav-item" onclick="showPage('landing')">Home</a>
+        <a href="#benefits" class="nav-item" onclick="showPage('landing')">Benefits</a>
+        <a href="#how-it-works" class="nav-item" onclick="showPage('landing')">How It Works</a>
+        <a href="#pricing" class="nav-item" onclick="showPage('landing')">Pricing</a>
         <button class="btn btn-outline" onclick="showPage('dashboard')">Live Demo</button>
       </nav>
     </div>
   </header>
 
   <!-- LANDING PAGE VIEW -->
-  <main id="landing-page" class="page">
+  <main id="landing-page">
     
     <!-- Hero Section -->
     <section id="hero" class="hero-section">
@@ -125,7 +126,7 @@
               <li><i class="fa-solid fa-check"></i> Automated Calendar Booking</li>
               <li><i class="fa-solid fa-check"></i> SMS Appointment Reminders</li>
             </ul>
-            <button class="btn btn-outline full-width" onclick="showPage('dashboard')">Start Free Trial</button>
+            <button class="btn btn-outline full-width" onclick="openPaymentModal('starter', 29)">Start Free Trial</button>
           </div>
           <div class="card pricing-card featured">
             <span class="popular-tag">Most Popular</span>
@@ -138,7 +139,7 @@
               <li><i class="fa-solid fa-check"></i> Multi-Staff Schedule Management</li>
               <li><i class="fa-solid fa-check"></i> Automated Re-booking Campaigns</li>
             </ul>
-            <button class="btn btn-primary full-width" onclick="showPage('dashboard')">Get Started</button>
+            <button class="btn btn-primary full-width" onclick="openPaymentModal('pro', 59)">Get Started</button>
           </div>
         </div>
       </div>
@@ -160,7 +161,7 @@
   </main>
 
   <!-- DASHBOARD MOCKUP VIEW -->
-  <main id="dashboard-page" class="page hidden">
+  <main id="dashboard-page" class="hidden">
     <div class="container dashboard-container">
       
       <!-- Top Bar -->
@@ -251,6 +252,47 @@
       </div>
     </div>
   </main>
+
+  <!-- Payment Modal -->
+  <div id="payment-modal" class="modal hidden">
+    <div class="modal-content">
+      <button class="close-btn" onclick="closePaymentModal()">&times;</button>
+      <h2>Complete Your Subscription</h2>
+      
+      <form id="payment-form">
+        <div class="form-group">
+          <label>Email Address</label>
+          <input type="email" id="email" placeholder="your@email.com" required>
+        </div>
+
+        <div class="form-group">
+          <label>Full Name</label>
+          <input type="text" id="name" placeholder="John Doe" required>
+        </div>
+
+        <div class="form-group">
+          <label>Card Details</label>
+          <div id="card-element"></div>
+          <div id="card-errors" class="error-message"></div>
+        </div>
+
+        <div class="plan-summary">
+          <p id="plan-name"></p>
+          <p id="plan-price"></p>
+        </div>
+
+        <button type="submit" class="btn btn-primary full-width" id="submit-btn">
+          <span id="button-text">Pay Now</span>
+          <i id="spinner" class="fa-solid fa-spinner hidden" style="margin-left: 8px;"></i>
+        </button>
+      </form>
+
+      <div id="payment-status" class="payment-status hidden"></div>
+    </div>
+  </div>
+
+  <!-- Modal Overlay -->
+  <div id="modal-overlay" class="modal-overlay hidden" onclick="closePaymentModal()"></div>
 
   <!-- Footer -->
   <footer class="footer">
